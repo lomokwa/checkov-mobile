@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Text, Center, Box, Heading, VStack, Checkbox, HStack } from "native-base";
+import { Text, Center, Box, Heading, VStack, Checkbox, HStack, Button } from "native-base";
 import TodoHeader from "./TodoHeader";
 
 export default function TodoList({ user }) {
@@ -28,6 +28,20 @@ export default function TodoList({ user }) {
     })
     .catch(alert)
   };
+
+  const handleItemDelete = (id) => {
+    const itemDelete = { id };
+    fetch(`https://checkov-api-lmkw.web.app/tasks/${user.uid}`, {
+      method: "DELETE",
+      headers: {"Content-type": "application/json"},
+      body: JSON.stringify(itemDelete)
+    })
+    .then(res => res.json())
+    .then(data => {
+      setTodoItems(data)
+    })
+    .catch(alert)
+  }
   
   return(
     <Center w="100%">
@@ -42,7 +56,8 @@ export default function TodoList({ user }) {
               return (
               <HStack key={item.id} w="100%" justifyContent="space-between" alignItems="center">
                   <Checkbox onChange={ () => handleItemUpdate(thisItemId, thisItemDone)} aria-label={item.title} isChecked={item.done} />
-                  <Text onPress={ () => handleItemUpdate(thisItemId, thisItemDone)} color={item.done ? "coolGray.400" : "gray.50"} fontSize={25} mx={2} strikeThrough={item.done} textAlign="left" width="100%">{item.title}</Text>
+                  <Text onPress={ () => handleItemUpdate(thisItemId, thisItemDone)} color={item.done ? "coolGray.400" : "gray.50"} fontSize={25} mx={2} strikeThrough={item.done} textAlign="left" width="50%">{item.title}</Text>
+                  <Button colorScheme={"rose"} onPress={ () => handleItemDelete(thisItemId) }>Delete</Button>
               </HStack>
             )})
           }
