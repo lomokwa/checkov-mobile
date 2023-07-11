@@ -1,7 +1,7 @@
-import { useState } from "react"
-import { Text, Center, Box, Heading, VStack, FormControl, Input, Button } from "native-base"
-import { signInWithEmailAndPassword } from "firebase/auth"
-import { auth } from "./fbConfig"
+import { useState } from "react";
+import { Text, Center, Box, Heading, VStack, FormControl, Input, Button } from "native-base";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "./fbConfig";
 
 
 export default function Login({ setUser }) {
@@ -40,5 +40,5 @@ export default function Login({ setUser }) {
           </VStack>
         </Box>
       </Center>
-  )
-}
+  );
+};

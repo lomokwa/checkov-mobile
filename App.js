@@ -1,11 +1,16 @@
-import { useState } from "react";
-import { NativeBaseProvider, Box, Text} from "native-base"
+import { useState, useEffect } from "react";
+import { NativeBaseProvider, Box, Text} from "native-base";
+import { auth } from "./app/fbConfig";
 import Login from "./app/Login";
 import TodoList from "./app/TodoList";
 
 export default function App() {
   const [user, setUser] = useState();
 
+  useEffect(() => {
+    const _user = auth.currentUser;
+    setUser(_user) 
+  }, []);
 
   return (
     <NativeBaseProvider>
@@ -18,4 +23,4 @@ export default function App() {
       </Box>
     </NativeBaseProvider>    
   );
-}
+};
