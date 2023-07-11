@@ -1,7 +1,21 @@
+import { useState } from "react"
 import { Text, Center, Box, Heading, VStack, FormControl, Input, Button } from "native-base"
+import { signInWithEmailAndPassword } from "firebase/auth"
+import { auth } from "./fbConfig"
 
 
 export default function Login({ setUser }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then(res => {
+        setUser(res.user)
+      })
+      .catch(err => alert(err.message))
+  };
+
   return(
       <Center w="100%">
         <Box safeArea px={2} py={8} w="90%" maxW={290}>
@@ -14,13 +28,13 @@ export default function Login({ setUser }) {
           <VStack space={3} mt={5}>
             <FormControl isRequired>
               <FormControl.Label>Email</FormControl.Label>
-              <Input size="lg" color="gray.300" keyboardType="email-address" placeholder="example@email.com" />
+              <Input onChangeText={setEmail} size="lg" color="gray.300" keyboardType="email-address" placeholder="example@email.com" />
             </FormControl>
             <FormControl isRequired>
             <FormControl.Label>Password</FormControl.Label>
-              <Input size="lg" color="gray.300" type="password" placeholder="********"/>
+              <Input onChangeText={setPassword} size="lg" color="gray.300" type="password" placeholder="********"/>
             </FormControl>
-            <Button mt={3} colorScheme="amber">
+            <Button onPress={handleLogin} mt={3} colorScheme="amber">
               Sign In
             </Button>
           </VStack>
