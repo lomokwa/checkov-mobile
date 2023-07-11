@@ -25,6 +25,7 @@ export default function TodoHeader({ setTodoItems, user }) {
       .finally(() => setNewItem(""))
 
   };
+  
 
   return(
     <HStack space={2}>

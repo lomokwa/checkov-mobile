@@ -14,6 +14,20 @@ export default function TodoList({ user }) {
         .catch(alert)
     }
   }, [user])
+
+  const handleItemUpdate = (id, done) => {
+    const itemUpdate = { id, done: !done };
+    fetch(`https://checkov-api-lmkw.web.app/tasks/${user.uid}`, {
+      method: "PATCH",
+      headers: {"Content-type": "application/json"},
+      body: JSON.stringify(itemUpdate),
+    })
+    .then(res => res.json())
+    .then(data => {
+      setTodoItems(data)
+    })
+    .catch(alert)
+  };
   
   return(
     <Center w="100%">
@@ -22,12 +36,15 @@ export default function TodoList({ user }) {
           <TodoHeader user={user} setTodoItems={setTodoItems} />
           {!todoItems
             ? <Text fontSize="lg" color="gray.300" textAlign="center">Loading...</Text>
-            : todoItems.map(item => (
+            : todoItems.map(item => {
+              const thisItemId = item.id;
+              const thisItemDone = item.done;
+              return (
               <HStack key={item.id} w="100%" justifyContent="space-between" alignItems="center">
-                  <Checkbox aria-label={item.title} isChecked={item.done} />
-                  <Text color={item.done ? "coolGray.400" : "gray.50"} fontSize={25} mx={2} strikeThrough={item.done} textAlign="left" width="100%">{item.title}</Text>
+                  <Checkbox onChange={ () => handleItemUpdate(thisItemId, thisItemDone)} aria-label={item.title} isChecked={item.done} />
+                  <Text onPress={ () => handleItemUpdate(thisItemId, thisItemDone)} color={item.done ? "coolGray.400" : "gray.50"} fontSize={25} mx={2} strikeThrough={item.done} textAlign="left" width="100%">{item.title}</Text>
               </HStack>
-            ))
+            )})
           }
         </VStack>
       </Box>
