@@ -56,8 +56,8 @@ export default function TodoList({ user }) {
               return (
               <HStack key={item.id} w="100%" justifyContent="space-between" alignItems="center">
                   <Checkbox onChange={ () => handleItemUpdate(thisItemId, thisItemDone)} aria-label={item.title} isChecked={item.done} />
-                  <Text onPress={ () => handleItemUpdate(thisItemId, thisItemDone)} color={item.done ? "coolGray.400" : "gray.50"} fontSize={25} mx={2} strikeThrough={item.done} textAlign="left" width="50%">{item.title}</Text>
-                  <Button colorScheme={"rose"} onPress={ () => handleItemDelete(thisItemId) }>Delete</Button>
+                  <Text onPress={ () => handleItemUpdate(thisItemId, thisItemDone)} color={item.done ? "coolGray.400" : "gray.50"} fontSize={25} ml={0} strikeThrough={item.done} textAlign="left" marginLeft={0} width="75%">{item.title}</Text>
+                  <Button width={50} colorScheme={"rose"} onPress={ () => handleItemDelete(thisItemId) }>X</Button>
               </HStack>
             )})
           }
